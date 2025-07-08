@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Navbar from "./Navbar.jsx";
 import axios from "axios";
-import { Circle, Clock, TrendingUp } from "lucide-react";
+import { Circle, Clock, TrendingUp, Zap } from "lucide-react";
 
 const Layout = ({ onLogout, user }) => {
   const [tasks, setTasks] = useState([]);
