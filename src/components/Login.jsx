@@ -23,7 +23,7 @@ const Login = ({ onSubmit, onSwitchMode }) => {
     if (token) {
       async () => {
         try {
-          const { data } = await axios.get(`${url}/v1/auth/current`, {
+          const { data } = await axios.get(`${url}/v1/user/current`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -51,7 +51,7 @@ const Login = ({ onSubmit, onSwitchMode }) => {
     }
     setLoading(true);
     try {
-      const { data } = await axios.post(`${url}/v1/auth/login`, formData);
+      const { data } = await axios.post(`${url}/v1/user/login`, formData);
       if (!data.token) throw new Error(data.message || "Login failed");
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.user.id);

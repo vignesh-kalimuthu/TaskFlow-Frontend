@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Navbar from "./Navbar.jsx";
+import Sidebar from "./Sidebar.jsx";
+import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { Circle, Clock, TrendingUp, Zap } from "lucide-react";
 
@@ -73,7 +75,7 @@ const Layout = ({ onLogout, user }) => {
   }, [tasks]);
 
   const StatCard = ({ title, value, icon }) => (
-    <div className="p-2 sm:p-3 bg-white rounded-xl shadow-sm border border-purple-100 hover:shadow-md transition-all duration-100 hover:border-purple-100 group">
+    <div className="p-2 sm:p-3 bg-white rounded-xl shadow-sm border border-purple-100 hover:shadow-md transition-all duration-300 hover:border-purple-100 group">
       <div className="flex items-center gap-2">
         <div className="p-1.5 rounded-lg bg-gradient-to-br from-fuchsia-500/10 to-purple-500/10 group-hover:from-fuchsia-500/20 group-hover:to-purple-500/20 ">
           {icon}
@@ -113,6 +115,8 @@ const Layout = ({ onLogout, user }) => {
     );
   }
 
+  console.log("TasksPAge Layout called");
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar user={user} onLogout={onLogout} />
@@ -125,9 +129,10 @@ const Layout = ({ onLogout, user }) => {
           </div>
           <div className="xl:col-span-1 space-y-4 sm:space-y-6">
             <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-purple-100">
-              <h1 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-gray-800 flex items-center gap-2">
+              <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-gray-800 flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
-              </h1>
+                Task Statistics
+              </h3>
               <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
                 <StatCard
                   title="Total Tasks"
