@@ -4,6 +4,7 @@ const TaskModal = () => {
   return (
     <div>
       <h3>Task Modal</h3>
+      <h1>MAIn TAsks</h1>
     </div>
   );
 };
