@@ -4,6 +4,9 @@ import Layout from "./components/Layout.jsx";
 import Login from "./components/Login.jsx";
 import SignUp from "./components/SignUp.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import PendingPage from "./pages/PendingPage.jsx";
+import CompletedPage from "./pages/CompletedPage.jsx";
+import Profile from "./components/Profile.jsx";
 
 const App = () => {
   const navigate = useNavigate();
@@ -74,6 +77,18 @@ const App = () => {
         }
       >
         <Route path="/" element={<Dashboard />} />
+        <Route path="/pending" element={<PendingPage />} />
+        <Route path="/complete" element={<CompletedPage />} />
+        <Route
+          path="/profile"
+          element={
+            <Profile
+              user={currentUser}
+              setCurrentUser={setCurrentUser}
+              onLogout={handleLogout}
+            />
+          }
+        />
       </Route>
       <Route
         path="*"
