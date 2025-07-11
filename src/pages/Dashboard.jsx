@@ -21,9 +21,12 @@ import {
 } from "../assets/dummy";
 import { Filter, HomeIcon, Plus } from "lucide-react";
 import axios from "axios";
+import { useOutletContext } from "react-router-dom";
 
 const API = "http://localhost:5000";
+
 const Dashboard = () => {
+  const { tasks, refreshTasks } = useOutletContext();
   const [showModal, setShowModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [filter, setFilter] = useState("all");
@@ -42,11 +45,9 @@ const Dashboard = () => {
         (t) =>
           t.completed === true ||
           t.completed === 1 ||
-          (
-            typeof t.completed === "string" &&
-            t.completed.toLowerCase() === "yes"
-          ).length
-      ),
+          (typeof t.completed === "string" &&
+            t.completed.toLowerCase() === "yes")
+      ).length,
     }),
     [tasks]
   );
@@ -79,7 +80,7 @@ const Dashboard = () => {
       try {
         if (taskData.id)
           await axios.put(`${API}/v1/task/update/${taskData.id}`, taskData);
-        refreshToken();
+        refreshTasks();
         setShowModal(false);
         setSelectedTask(null);
       } catch (error) {
@@ -106,7 +107,6 @@ const Dashboard = () => {
           Add New Task
         </button>
       </div>
-
       <div className={STATS_GRID}>
         {STATS.map(
           ({
@@ -141,7 +141,6 @@ const Dashboard = () => {
           )
         )}
       </div>
-
       <div className="space-y-6">
         <div className={FILTER_WRAPPER}>
           <div className="flex items-center gap-2 min-w-0">
@@ -201,7 +200,7 @@ const Dashboard = () => {
               <TaskItem
                 key={task._id || task.id}
                 task={task}
-                onRefresh={refreshToken}
+                onRefresh={refreshTasks}
                 showCompleteCheckbox
                 onEdit={() => {
                   setSelectedTask(task);
@@ -220,7 +219,15 @@ const Dashboard = () => {
           <span className="text-gray-600 font-medium">Add New task</span>
         </div>
       </div>
-      {/* <TaskModal isOpen={showModal || !selectedTask} onClose={()=>/> */}
+      <TaskModal
+        isOpen={showModal || !!selectedTask}
+        onClose={() => {
+          setShowModal(false);
+          setSelectedTask(null);
+        }}
+        taskToEdit={selectedTask}
+        onSave={handleTasksSave}
+      />
     </div>
   );
 };
